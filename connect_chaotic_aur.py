@@ -66,6 +66,13 @@ def update_system():
         exit(update_result)
 
 
+def append_mirrorlist():
+    with open('/etc/pacman.conf', 'a') as f:
+        f.write('''
+[chaotic-aur]
+Include = /etc/pacman.d/chaotic-mirrorlist''')
+
+
 def connect_chaotic_aur():
     if check_for_chaotic_aur():
         print("Chaotic AUR already enabled")
@@ -74,6 +81,9 @@ def connect_chaotic_aur():
     enroll_chaotic_aur_keys(CHAOTIC_AUR_KEY)
     install_chaotic_aur_keyring()
     install_chaotic_aur_mirrorlist()
+
+    append_mirrorlist()
+
     update_system()
 
     print('Chaotic AUR successfully connected!')
