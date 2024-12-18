@@ -69,7 +69,7 @@ def update_system():
 def connect_chaotic_aur():
     if check_for_chaotic_aur():
         print("Chaotic AUR already enabled")
-        exit(0)
+        return
     
     enroll_chaotic_aur_keys(CHAOTIC_AUR_KEY)
     install_chaotic_aur_keyring()

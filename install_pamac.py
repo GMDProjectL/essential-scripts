@@ -14,15 +14,10 @@ import sys
 from connect_chaotic_aur import connect_chaotic_aur, update_system
 
 
-connect_chaotic_aur()
-
-
 def install_pamac():
-    print("Installing Pamac...")
-
-    update_system()
     connect_chaotic_aur()
-    update_system()
+
+    print("Installing Pamac...")
 
     pamac_result = os.system("pacman -S --noconfirm pamac")
 
