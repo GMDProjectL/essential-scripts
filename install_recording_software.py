@@ -18,6 +18,17 @@ import subprocess
 def install_recording_software():
     install_zenity()
 
+    admin_theme_fix = []
+
+    if os.getenv("BUFF_UID") is not None:
+        uid = int(os.getenv("BUFF_UID"))
+        username = os.getenv("BUFF_USER")
+
+        admin_theme_fix = [
+            'pkexec', '--user', username,
+            'env', f'XDG_RUNTIME_DIR=/run/user/{uid}'
+        ] # WIP
+
     try:
         zenity_list_output = subprocess.check_output(
             [
