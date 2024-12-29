@@ -49,7 +49,7 @@ def install_recording_software():
         if software == '"OBS"':
             print('Installing OBS...')
             
-            obs_result = os.system("pacman -Syu --noconfirm obs-studio")
+            obs_result = os.system("flatpak install -y flathub com.obsproject.Studio")
 
             if obs_result != 0:
                 print('Failed to install OBS.')
