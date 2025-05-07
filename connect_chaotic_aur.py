@@ -6,10 +6,16 @@ import sys
 if os.path.dirname(os.path.abspath(__file__)) != os.getcwd():
     os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-# check if running under sudo 
-if os.geteuid() != 0: 
-    print('This script must be run with sudo.') 
-    exit(1)
+import sys
+
+# Relaunch as sudo/root if not already root
+if os.geteuid() != 0:
+    print("\033[93m[!] Not running as root. Re-executing with sudo...\033[0m")
+    try:
+        os.execvp("sudo", ["sudo", sys.executable] + sys.argv)
+    except Exception as e:
+        print(f"\033[91m[!] Could not escalate privileges: {e}\033[0m")
+        sys.exit(1)
 
 
 CHAOTIC_AUR_KEY = '3056513887B78AEB'
@@ -90,4 +96,9 @@ def connect_chaotic_aur():
 
 
 if __name__ == "__main__":
+    if '-h' in sys.argv or '--help' in sys.argv:
+        print("Usage: sudo python3 connect_chaotic_aur.py\nAdds and sets up the Chaotic AUR repository. Requires root/sudo.")
+        sys.exit(0)
+    print("\033[92m[+] Connecting Chaotic AUR repository...\033[0m")
     connect_chaotic_aur()
+    print("\033[92m[+] Script complete.\033[0m")
